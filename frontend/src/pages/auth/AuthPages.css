@@ -1,0 +1,21 @@
+/* AuthPages.css */
+
+/* Add subtle hover effects for inputs */
+input:focus {
+  box-shadow: 0 0 0 3px rgba(219, 39, 119, 0.3); /* pink focus for register/login */
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(219, 39, 119, 0.3);
+}
+
+/* Optional: subtle card animation */
+div[class*="shadow-lg"] {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+div[class*="shadow-lg"]:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+}

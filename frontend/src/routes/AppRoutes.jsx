@@ -6,16 +6,20 @@ import Admin from "../pages/admin/Admin";
 import AdminLoans from "../pages/admin/AdminLoans";
 import User from "../pages/user/User";
 import UserLoans from "../pages/user/UserLoans";
+import LandingPage from "../pages/LandingPage";
 
 export default function AppRoutes() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
+       
+         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/loans" element={<AdminLoans />} />
         <Route path="/user" element={<User />} />
         <Route path="/user/loans" element={<UserLoans />} />
+        <Route path="/" element={<LandingPage />} />
+        
       </Routes>
     </Router>
   );

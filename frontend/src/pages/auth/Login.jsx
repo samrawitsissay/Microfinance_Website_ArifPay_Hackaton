@@ -26,98 +26,97 @@ export default function Login() {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col">
-      {/* ===== Background Image ===== */}
-      <div className="absolute inset-0">
-        <img
-          src="/src/assets/images/microfinance.jpg"
-          alt="Background"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-40" /> {/* Dark overlay */}
-      </div>
-
+    <div
+      className="relative min-h-screen flex flex-col justify-center items-center"
+      style={{
+        backgroundImage: `
+          linear-gradient(rgba(0, 100, 0, 0.7), rgba(0, 100, 0, 0.5)),
+          url("/src/assets/images/microfinance.jpg")
+        `,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       {/* ===== Login Card ===== */}
-      <div className="flex flex-1 items-center justify-center relative z-10">
-        <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8">
-          <h2 className="text-2xl font-bold mb-2 text-center text-green-600">
-            Welcome Back
-          </h2>
-          <p className="text-center text-gray-500 mb-6">Log into your account</p>
+      <div className="w-full max-w-md bg-white bg-opacity-95 rounded-2xl shadow-2xl p-8 z-10">
+        <h2 className="text-3xl font-extrabold mb-2 text-center text-green-700">
+          Welcome Back
+        </h2>
+        <p className="text-center text-gray-600 mb-6">Log into your account</p>
 
-          <form onSubmit={handleLogin} className="space-y-4">
-            {/* User Type */}
-            <div>
-              <select
-                className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                value={userType}
-                onChange={(e) => setUserType(e.target.value)}
-              >
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-              </select>
-            </div>
-
-            {/* Username */}
-            <div>
-              <input
-                type="text"
-                placeholder="Username"
-                className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
-            </div>
-
-            {/* Password */}
-            <div>
-              <input
-                type="password"
-                placeholder="Password"
-                className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-
-            {/* Remember + Forgot */}
-            <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center gap-2">
-                <input type="checkbox" />
-                Remember me
-              </label>
-              <button
-                type="button"
-                className="text-green-600 hover:underline"
-                onClick={() => navigate("/forgot-password")}
-              >
-                Forgot password?
-              </button>
-            </div>
-
-            {/* Login Button */}
-            <Button
-              type="submit"
-              className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
+        <form onSubmit={handleLogin} className="space-y-4">
+          {/* User Type */}
+          <div>
+            <select
+              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              value={userType}
+              onChange={(e) => setUserType(e.target.value)}
             >
-              Sign In
-            </Button>
-          </form>
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
 
-          {/* Signup Link */}
-          <p className="text-center text-sm text-gray-600 mt-6">
-            Don&apos;t have an account?{" "}
+          {/* Username */}
+          <div>
+            <input
+              type="text"
+              placeholder="Username"
+              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
+
+          {/* Password */}
+          <div>
+            <input
+              type="password"
+              placeholder="Password"
+              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          {/* Remember + Forgot */}
+          <div className="flex items-center justify-between text-sm">
+            <label className="flex items-center gap-2">
+              <input type="checkbox" />
+              Remember me
+            </label>
             <button
               type="button"
-              className="text-green-600 font-semibold hover:underline"
-              onClick={() => navigate("/register")}
+              className="text-green-700 hover:underline"
+              onClick={() => navigate("/forgot-password")}
             >
-              Sign Up
+              Forgot password?
             </button>
-          </p>
-        </div>
+          </div>
+
+          {/* Login Button */}
+          <Button
+            type="submit"
+            className="w-full bg-green-700 text-white py-2 rounded-lg hover:bg-green-800 transition"
+          >
+            Sign In
+          </Button>
+        </form>
+
+        {/* Signup Link */}
+        <p className="text-center text-sm text-gray-700 mt-6">
+          Don&apos;t have an account?{" "}
+          <button
+            type="button"
+            className="text-green-700 font-semibold hover:underline"
+            onClick={() => navigate("/register")}
+          >
+            Sign Up
+          </button>
+        </p>
       </div>
     </div>
   );

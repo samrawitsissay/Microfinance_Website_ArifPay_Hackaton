@@ -77,28 +77,40 @@ export default function LandingPage() {
       <Navbar scrollToSupport={scrollToSupport} />
 
       {/* HERO SECTION */}
-      <section
-        id="home"
-        className="h-screen flex flex-col justify-center items-center bg-gradient-to-r from-green-700 to-green-500 text-white px-6 text-center"
-      >
-        <h1 className="text-5xl font-extrabold mb-4">
-          Empowering Communities Through Microfinance
-        </h1>
-        <p className="text-lg max-w-2xl">
-          We provide small loans, financial training, and continuous support to
-          help individuals and small businesses thrive.
-        </p>
-        <button
-          onClick={() =>
-            document
-              .getElementById("services")
-              .scrollIntoView({ behavior: "smooth" })
-          }
-          className="mt-8 bg-white text-green-600 font-semibold px-6 py-3 rounded-full shadow hover:bg-gray-100 cursor-pointer"
-        >
-          Get Started
-        </button>
-      </section>
+<section
+  id="home"
+  className="h-screen flex flex-col justify-center items-center text-white px-6 text-center relative overflow-hidden"
+  style={{
+    backgroundImage: `url("/src/assets/images/microfinance.jpg")`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+  }}
+>
+  {/* Gradient overlay */}
+  <div className="absolute inset-0 bg-gradient-to-r from-green-900/70 to-green-700/50 z-0"></div>
+
+  {/* Content */}
+  <div className="relative z-10">
+    <h1 className="text-5xl font-extrabold mb-4">
+      Empowering Communities Through Microfinance
+    </h1>
+    <p className="text-lg max-w-2xl mx-auto">
+      We provide small loans, financial training, and continuous support to
+      help individuals and small businesses thrive.
+    </p>
+    <button
+      onClick={() =>
+        document
+          .getElementById("services")
+          .scrollIntoView({ behavior: "smooth" })
+      }
+      className="mt-8 bg-white text-green-600 font-semibold px-6 py-3 rounded-full shadow hover:bg-gray-100 cursor-pointer"
+    >
+      Get Started
+    </button>
+  </div>
+</section>
 
       {/* SERVICES SECTION */}
       <section id="services" className="py-20 bg-gray-50 px-6">
@@ -154,6 +166,7 @@ export default function LandingPage() {
 
       {/* SUPPORT SECTION */}
       <section
+      id="support"
         ref={supportRef}
         className="flex flex-col md:flex-row justify-between items-center px-10 py-20 bg-green-50"
       >
@@ -203,7 +216,7 @@ export default function LandingPage() {
 
       {/* FOOTER */}
       <footer className="bg-green-700 text-white text-center py-6 mt-10">
-        <p>© 2025 GreenFinance. All rights reserved.</p>
+        <p>© 2025 Mic.Fin. All rights reserved.</p>
       </footer>
     </div>
   );

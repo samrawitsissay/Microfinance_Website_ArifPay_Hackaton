@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import StatsSection from "../components/StatsSection";
 import Navbar from "../components/Navbar";
 import {
   HandCoins,
@@ -111,6 +112,8 @@ export default function LandingPage() {
     </button>
   </div>
 </section>
+<StatsSection />
+
 
       {/* SERVICES SECTION */}
       <section id="services" className="py-20 bg-gray-50 px-6">

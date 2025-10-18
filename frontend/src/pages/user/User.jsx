@@ -3,7 +3,8 @@ import Footer from "../../components/common/Footer";
 import Card from "../../components/common/Card";
 import Button from "../../components/common/Button";
 import { Menu, X } from "lucide-react";
-import TopBar from "../../components/common/TopBar"; 
+import TopBar from "../../components/common/TopBar";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 const userLoans = [
   { id: 1, name: "Small Business Loan", amount: 10000, repaid: 4000, status: "Ongoing" },
@@ -15,9 +16,30 @@ const savingsGroups = [
   { id: 2, name: "Community Group B", contribution: 3000, nextPayout: "2025-11-01" },
 ];
 
+const cashflowData = [
+  { month: "Jan", disbursed: 5000, repaid: 2000 },
+  { month: "Feb", disbursed: 7000, repaid: 3500 },
+  { month: "Mar", disbursed: 6000, repaid: 4500 },
+  { month: "Apr", disbursed: 8000, repaid: 7000 },
+  { month: "May", disbursed: 9000, repaid: 8500 },
+];
+
+const transactions = [
+  { name: "Loan Repayment - Business", date: "2025-10-10", amount: "1,000 ETB", status: "Completed" },
+  { name: "Savings Contribution - Group A", date: "2025-10-12", amount: "500 ETB", status: "Pending" },
+  { name: "Loan Application Submitted", date: "2025-10-15", amount: "-", status: "In Review" },
+];
+
 export default function User() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedSection, setSelectedSection] = useState("dashboard");
+  const userName = "Abebe Alemu";
+
+  const notifications = [
+  { id: 1, message: "Your loan repayment is due tomorrow", date: "2025-10-18" },
+  { id: 2, message: "You joined a new savings group", date: "2025-10-15" },
+];
+
 
   const handleRepay = (loan) => {
     alert(`Redirecting to ArifPay for loan: ${loan.name}`);
@@ -37,7 +59,6 @@ export default function User() {
 
   return (
     <>
-      {/* Removed NavBar */}
       <div className="flex min-h-screen bg-gray-50">
         {/* Sidebar */}
         <aside
@@ -46,14 +67,13 @@ export default function User() {
           }`}
         >
           <div className="flex justify-end mb-8 md:hidden">
-             <TopBar userName="John Doe" notifications={3} />
+            <TopBar userName={userName} notifications={3} />
             <button
               className="text-gray-700"
               onClick={() => setMenuOpen(false)}
             >
               <X size={24} />
             </button>
-            
           </div>
 
           <ul className="space-y-3">
@@ -86,16 +106,69 @@ export default function User() {
           >
             <Menu size={28} />
           </button>
- <TopBar userName="John Doe" notifications={3} />
+
+        <TopBar userName="Abebe Alemu" notifications={notifications.length} />
+
+
           {selectedSection === "dashboard" && (
             <div>
-              
-              <h1 className="text-3xl font-bold mb-6 text-green-700">
-                Welcome Back!
-              </h1>
-              <p className="text-gray-600">
-                Here’s an overview of your loans and savings.
+              <p className="text-gray-600 mb-6">
+                Here’s an overview of your recent microfinance activities.
               </p>
+
+              {/* Loan Overview */}
+              <div className="bg-white p-6 rounded-2xl shadow mb-10">
+                <h2 className="text-xl font-semibold mb-4 text-gray-700">
+                  Loan & Savings Overview
+                </h2>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={cashflowData}>
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="disbursed" fill="#16a34a" name="Loan Disbursed" radius={[6,6,0,0]} />
+                    <Bar dataKey="repaid" fill="#86efac" name="Loan Repaid" radius={[6,6,0,0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+
+              {/* Recent Activities */}
+              <div className="bg-white p-6 rounded-2xl shadow">
+                <h2 className="text-xl font-semibold mb-4 text-gray-700">
+                  Recent Activities
+                </h2>
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="border-b text-gray-600">
+                      <th className="pb-3">Activity</th>
+                      <th className="pb-3">Date</th>
+                      <th className="pb-3">Amount</th>
+                      <th className="pb-3">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-gray-700">
+                    {transactions.map((t, i) => (
+                      <tr key={i} className="border-b last:border-none">
+                        <td className="py-3">{t.name}</td>
+                        <td className="py-3">{t.date}</td>
+                        <td className="py-3">{t.amount}</td>
+                        <td
+                          className={`py-3 font-semibold ${
+                            t.status === "Completed"
+                              ? "text-green-600"
+                              : t.status === "Pending"
+                              ? "text-yellow-500"
+                              : "text-gray-500"
+                          }`}
+                        >
+                          {t.status}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
 
@@ -188,5 +261,5 @@ export default function User() {
       </div>
       <Footer />
     </>
-  );
+  );v
 }

@@ -7,7 +7,8 @@ import AdminLoans from "../pages/admin/AdminLoans";
 import User from "../pages/user/User";
 import UserLoans from "../pages/user/UserLoans";
 import LandingPage from "../pages/LandingPage";
-
+import Notifications from "../pages/user/Notification"; 
+import Profile from "../pages/user/Profile"; 
 export default function AppRoutes() {
   return (
     <Router>
@@ -19,7 +20,9 @@ export default function AppRoutes() {
         <Route path="/user" element={<User />} />
         <Route path="/user/loans" element={<UserLoans />} />
         <Route path="/" element={<LandingPage />} />
-        
+        <Route path="/" element={<User />} />
+        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );

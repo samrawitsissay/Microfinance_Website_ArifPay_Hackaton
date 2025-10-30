@@ -1,0 +1,110 @@
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #065f46; /* same green theme */
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-family: 'Inter', sans-serif;
+}
+
+.navbar-logo h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: white;
+}
+
+/* LINKS */
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.nav-link {
+  color: white;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.nav-link:hover {
+  background-color: rgba(255,255,255,0.15);
+  transform: translateY(-2px);
+}
+
+.active-link {
+  background-color: rgba(255,255,255,0.25);
+  font-weight: 600;
+}
+
+/* BUTTONS */
+.nav-button {
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #16a34a;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.nav-button:hover {
+  background-color: #15803d;
+  transform: translateY(-2px);
+}
+
+/* HAMBURGER MENU (mobile) */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+/* RESPONSIVE */
+@media(max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .navbar-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #065f46;
+    flex-direction: column;
+    gap: 0;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease;
+  }
+
+  .navbar-links.active {
+    max-height: 500px; /* enough to show all links */
+  }
+
+  .nav-link, .nav-button {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+  }
+}

@@ -5,7 +5,7 @@ import Button from "../../components/common/Button";
 import { Menu, X } from "lucide-react";
 import TopBar from "../../components/common/TopBar";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
-
+import { useNavigate } from "react-router-dom"; 
 const userLoans = [
   { id: 1, name: "Small Business Loan", amount: 10000, repaid: 4000, status: "Ongoing" },
   { id: 2, name: "Education Loan", amount: 5000, repaid: 5000, status: "Paid" },
@@ -34,20 +34,15 @@ export default function User() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [selectedSection, setSelectedSection] = useState("dashboard");
   const userName = "Abebe Alemu";
+  const navigate = useNavigate(); 
 
   const notifications = [
-  { id: 1, message: "Your loan repayment is due tomorrow", date: "2025-10-18" },
-  { id: 2, message: "You joined a new savings group", date: "2025-10-15" },
-];
+    { id: 1, message: "Your loan repayment is due tomorrow", date: "2025-10-18" },
+    { id: 2, message: "You joined a new savings group", date: "2025-10-15" },
+  ];
 
-
-  const handleRepay = (loan) => {
-    alert(`Redirecting to ArifPay for loan: ${loan.name}`);
-  };
-
-  const handleContribute = (group) => {
-    alert(`Redirecting to ArifPay for savings group: ${group.name}`);
-  };
+  const handleRepay = (loan) => alert(`Redirecting to ArifPay for loan: ${loan.name}`);
+  const handleContribute = (group) => alert(`Redirecting to ArifPay for savings group: ${group.name}`);
 
   const menuItems = [
     { id: "dashboard", label: "Dashboard" },
@@ -68,10 +63,7 @@ export default function User() {
         >
           <div className="flex justify-end mb-8 md:hidden">
             <TopBar userName={userName} notifications={3} />
-            <button
-              className="text-gray-700"
-              onClick={() => setMenuOpen(false)}
-            >
+            <button className="text-gray-700" onClick={() => setMenuOpen(false)}>
               <X size={24} />
             </button>
           </div>
@@ -99,167 +91,179 @@ export default function User() {
 
         {/* Main Content */}
         <main className="flex-1 p-6 md:p-10 transition-all duration-300">
-          {/* Hamburger Button for Mobile */}
-          <button
-            className="md:hidden mb-6 text-gray-700"
-            onClick={() => setMenuOpen(true)}
-          >
+          <button className="md:hidden mb-6 text-gray-700" onClick={() => setMenuOpen(true)}>
             <Menu size={28} />
           </button>
 
-        <TopBar userName="Abebe Alemu" notifications={notifications.length} />
+          <TopBar userName={userName} notifications={notifications.length} />
 
-
+          {/* Dashboard Section */}
           {selectedSection === "dashboard" && (
-            <div>
-              <p className="text-gray-600 mb-6">
-                Here’s an overview of your recent microfinance activities.
-              </p>
+            <section className="mt-8">
+             
 
-              {/* Loan Overview */}
-              <div className="bg-white p-6 rounded-2xl shadow mb-10">
-                <h2 className="text-xl font-semibold mb-4 text-gray-700">
-                  Loan & Savings Overview
-                </h2>
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={cashflowData}>
-                    <XAxis dataKey="month" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="disbursed" fill="#16a34a" name="Loan Disbursed" radius={[6,6,0,0]} />
-                    <Bar dataKey="repaid" fill="#86efac" name="Loan Repaid" radius={[6,6,0,0]} />
-                  </BarChart>
-                </ResponsiveContainer>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <Card>
+                  <h3 className="text-lg font-semibold">Active Loans</h3>
+                  <p className="text-2xl font-bold mt-2">{userLoans.length}</p>
+                </Card>
+
+                <Card>
+                  <h3 className="text-lg font-semibold">Savings Groups</h3>
+                  <p className="text-2xl font-bold mt-2">{savingsGroups.length}</p>
+                </Card>
+
+                <Card>
+                  <h3 className="text-lg font-semibold">Recent Transactions</h3>
+                  <p className="text-2xl font-bold mt-2">{transactions.length}</p>
+                </Card>
               </div>
 
-              {/* Recent Activities */}
-              <div className="bg-white p-6 rounded-2xl shadow">
-                <h2 className="text-xl font-semibold mb-4 text-gray-700">
-                  Recent Activities
-                </h2>
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="border-b text-gray-600">
-                      <th className="pb-3">Activity</th>
-                      <th className="pb-3">Date</th>
-                      <th className="pb-3">Amount</th>
-                      <th className="pb-3">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-gray-700">
-                    {transactions.map((t, i) => (
-                      <tr key={i} className="border-b last:border-none">
-                        <td className="py-3">{t.name}</td>
-                        <td className="py-3">{t.date}</td>
-                        <td className="py-3">{t.amount}</td>
-                        <td
-                          className={`py-3 font-semibold ${
-                            t.status === "Completed"
-                              ? "text-green-600"
-                              : t.status === "Pending"
-                              ? "text-yellow-500"
-                              : "text-gray-500"
-                          }`}
-                        >
-                          {t.status}
-                        </td>
-                      </tr>
+              <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2 bg-white p-6 rounded-2xl shadow">
+                  <h3 className="text-xl font-semibold mb-4 text-green-700">Cashflow (disbursed vs repaid)</h3>
+                  <div style={{ width: '100%', height: 260 }}>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={cashflowData}>
+                        <XAxis dataKey="month" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="disbursed" fill="#16a34a" />
+                        <Bar dataKey="repaid" fill="#059669" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+
+                <div className="bg-white p-6 rounded-2xl shadow">
+                  <h3 className="text-xl font-semibold mb-4 text-green-700">Recent Transactions</h3>
+                  <div className="space-y-3">
+                    {transactions.map((t, idx) => (
+                      <div key={idx} className="flex justify-between items-center border-b pb-3">
+                        <div>
+                          <p className="font-semibold">{t.name}</p>
+                          <p className="text-sm text-gray-500">{t.date} · {t.amount}</p>
+                        </div>
+                        <div>
+                          <span className={`px-3 py-1 rounded-full text-sm ${t.status === 'Completed' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
+                            {t.status}
+                          </span>
+                        </div>
+                      </div>
                     ))}
-                  </tbody>
-                </table>
+                  </div>
+                </div>
               </div>
-            </div>
+            </section>
           )}
 
+          {/* My Loans Section */}
           {selectedSection === "loans" && (
             <section className="mt-8">
-              <h2 className="text-2xl font-bold mb-4 text-green-700">
-                My Loans
-              </h2>
-              <div className="grid md:grid-cols-2 gap-6">
-                {userLoans.map((loan) => {
-                  const progress = (loan.repaid / loan.amount) * 100;
-                  return (
-                    <Card key={loan.id}>
-                      <h3 className="font-bold text-lg mb-2 text-gray-800">
-                        {loan.name}
-                      </h3>
-                      <p>Amount: {loan.amount} ETB</p>
-                      <p>Status: {loan.status}</p>
-                      <div className="bg-gray-200 h-3 rounded mt-2">
-                        <div
-                          className="bg-green-600 h-3 rounded transition-all duration-500"
-                          style={{ width: `${progress}%` }}
-                        ></div>
+              <h2 className="text-2xl font-bold mb-4 text-green-700">My Loans</h2>
+
+              <div className="space-y-4">
+                {userLoans.map((loan) => (
+                  <Card key={loan.id}>
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <h3 className="font-bold text-lg">{loan.name}</h3>
+                        <p className="text-gray-600">Amount: {loan.amount} ETB</p>
+                        <p className="text-gray-600">Status: {loan.status}</p>
                       </div>
-                      {loan.status === "Ongoing" && (
-                        <Button onClick={() => handleRepay(loan)} className="mt-4">
-                          Repay Now
-                        </Button>
-                      )}
-                    </Card>
-                  );
-                })}
-              </div>
-            </section>
-          )}
-
-          {selectedSection === "apply" && (
-            <section className="mt-8">
-              <h2 className="text-2xl font-bold mb-4 text-green-700">
-                Apply for a New Loan
-              </h2>
-              <p className="text-gray-600 mb-4">
-                You can apply for a business, education, or emergency loan.
-              </p>
-              <Button>Apply Now</Button>
-            </section>
-          )}
-
-          {selectedSection === "savings" && (
-            <section className="mt-8">
-              <h2 className="text-2xl font-bold mb-4 text-green-700">
-                My Savings Groups
-              </h2>
-              <div className="grid md:grid-cols-2 gap-6">
-                {savingsGroups.map((group) => (
-                  <Card key={group.id}>
-                    <h3 className="font-bold text-lg mb-2 text-gray-800">
-                      {group.name}
-                    </h3>
-                    <p>Contribution: {group.contribution} ETB</p>
-                    <p>Next Payout: {group.nextPayout}</p>
-                    <Button
-                      onClick={() => handleContribute(group)}
-                      className="mt-4"
-                    >
-                      Contribute
-                    </Button>
+                      <div className="space-x-2">
+                        <Button onClick={() => handleRepay(loan)}>Repay</Button>
+                      </div>
+                    </div>
                   </Card>
                 ))}
               </div>
             </section>
           )}
 
+          {/* Savings Section */}
+          {selectedSection === "savings" && (
+            <section className="mt-8">
+              <h2 className="text-2xl font-bold mb-4 text-green-700">Savings Groups</h2>
+              <div className="space-y-4">
+                {savingsGroups.map((g) => (
+                  <Card key={g.id}>
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <h3 className="font-bold">{g.name}</h3>
+                        <p className="text-gray-600">Contribution: {g.contribution} ETB</p>
+                        <p className="text-gray-600">Next payout: {g.nextPayout}</p>
+                      </div>
+                      <div>
+                        <Button onClick={() => handleContribute(g)}>Contribute</Button>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* FAQs Section */}
           {selectedSection === "faqs" && (
             <section className="mt-8">
               <h2 className="text-2xl font-bold mb-4 text-green-700">FAQs</h2>
-              <ul className="space-y-4 text-gray-700">
-                <li>
-                  <strong>How do I repay my loan?</strong>  
-                  You can repay through ArifPay from your loan dashboard.
-                </li>
-                <li>
-                  <strong>Can I join multiple savings groups?</strong>  
-                  Yes, you can join and contribute to multiple groups.
-                </li>
-              </ul>
+              <div className="space-y-4">
+                <Card>
+                  <h3 className="font-semibold">How do I apply for a loan?</h3>
+                  <p className="text-gray-600">Use the "Apply for Loan" section to start a new application or click "Apply Now" to go to the form.</p>
+                </Card>
+                <Card>
+                  <h3 className="font-semibold">How do I repay my loan?</h3>
+                  <p className="text-gray-600">Click the "Repay" button on a loan to start repayment through ArifPay.</p>
+                </Card>
+                <Card>
+                  <h3 className="font-semibold">Who can join a savings group?</h3>
+                  <p className="text-gray-600">Community members who meet the group's rules can join. Contact support for more details.</p>
+                </Card>
+              </div>
+            </section>
+          )}
+
+          {/* Apply Section */}
+          {selectedSection === "apply" && (
+            <section className="mt-8">
+              <h2 className="text-2xl font-bold mb-4 text-green-700">Apply for a New Loan</h2>
+
+              <div className="mt-10">
+                <h3 className="text-xl font-semibold mb-3 text-green-700">
+                  Eligibility Criteria
+                </h3>
+                <ul className="list-disc list-inside text-gray-700 space-y-2">
+                  <li>Age 18–60 and not legally incapable due to non-age reason</li>
+                  <li>No outstanding loan from any lending institute, and free from Government financial obligations</li>
+                  <li>Good credit history acceptable by the society and able to properly manage his/her family</li>
+                  <li>Physically fit to undertake the intended business</li>
+                  <li>Viable and socially acceptable business plan that can ensure repayment</li>
+                  <li>Permanent resident documents</li>
+                  <li>Institutions with legal personality</li>
+                  <li>Willing to accept MMFI’s credit and saving policies</li>
+                  <li>Business License</li>
+                  <li>
+                    Good credit history confirmed by employer (at least 6 months service for both borrower and guarantor)
+                  </li>
+                  <li>
+                    Guarantor(s) should have ≥5 years to retirement or present a government employee or use own/third-party house as collateral
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mt-8">
+                <Button onClick={() => navigate("/loan-form")}>
+                  Apply Now
+                </Button>
+              </div>
             </section>
           )}
         </main>
       </div>
       <Footer />
     </>
-  );v
+  );
 }
